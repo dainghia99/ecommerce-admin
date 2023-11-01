@@ -1,0 +1,119 @@
+"use client";
+
+import { Store } from "@prisma/client";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { useStoreModal } from "@/hooks/use-store-modal";
+import { useParams, useRouter } from "next/navigation";
+import { useState } from "react";
+import { Button } from "./ui/button";
+import {
+  Check,
+  ChevronsUpDown,
+  PlusCircle,
+  Store as StoreIcon,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+} from "./ui/command";
+
+type PopoverTriggerProps = React.ComponentPropsWithoutRef<
+  typeof PopoverTrigger
+>;
+
+interface StoreSwitcherProps extends PopoverTriggerProps {
+  items: Array<Store>;
+}
+
+export default function StoreSwitcher({
+  items = [],
+  className,
+}: StoreSwitcherProps) {
+  const storeModal = useStoreModal();
+
+  const params = useParams();
+  const router = useRouter();
+
+  const formatItems = items.map((item) => ({
+    lable: item.name,
+    value: item.id,
+  }));
+
+  const currentStore = formatItems.find(
+    (item) => item.value === params.storeId
+  );
+
+  const [open, setOpen] = useState(false);
+
+  const onStoreSelect = (store: { value: string; lable: string }) => {
+    setOpen(false);
+    router.push(`/${store.value}`);
+  };
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          size="sm"
+          role="combobox"
+          aria-expanded={open}
+          aria-label="Chọn danh mục sản phẩm"
+          className={cn("w-[200px] justify-between", className)}
+        >
+          <StoreIcon className="mr-2 h-4 w-4" />
+          Danh sách DMSP
+          <ChevronsUpDown className="ml-auto h-4 w-4 opacity-50 shrink-0" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[200px] p-0">
+        <Command>
+          <CommandList>
+            <CommandInput placeholder="Tìm kiếm DMSP" />
+            <CommandEmpty>Không tìm thấy</CommandEmpty>
+            <CommandGroup heading="DMSP">
+              {formatItems.map((store) => (
+                <CommandItem
+                  key={store.value}
+                  onSelect={() => onStoreSelect(store)}
+                  className="text-sm"
+                >
+                  <StoreIcon className="mr-2 h-4 w-4" />
+                  {store.lable}
+                  <Check
+                    className={cn(
+                      "ml-auto h-4 w-4 ",
+                      currentStore?.value === store.value
+                        ? "opacity-100"
+                        : "opacity-0"
+                    )}
+                  />
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+          <CommandSeparator />
+          <CommandList>
+            <CommandGroup>
+              <CommandItem
+                onSelect={() => {
+                  setOpen(false);
+                  storeModal.onOpen();
+                }}
+              >
+                <PlusCircle className="mr-2 h-5 w-5" />
+                Thêm mới DMSP
+              </CommandItem>
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+}
