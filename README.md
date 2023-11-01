@@ -1,8 +1,10 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Bắt đầu
 
-First, run the development server:
+Đầu tiên chắc chắn rằng máy của bạn đã cài `nodejs`
+Bạn có thể gõ `npm -v` để kiểm tra version đã cài đặt để thực hiện các bước tiếp theo!
+Nếu bạn chưa cài đặt vui lòng lên trang chủ của [`nodejs`] (https://nodejs.org/en) để cài đặt
 
 ```bash
 npm run dev
