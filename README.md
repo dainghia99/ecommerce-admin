@@ -3,8 +3,22 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## Bắt đầu
 
 Đầu tiên chắc chắn rằng máy của bạn đã cài `nodejs`
-Bạn có thể gõ `npm -v` để kiểm tra version đã cài đặt để thực hiện các bước tiếp theo!
-Nếu bạn chưa cài đặt vui lòng lên trang chủ của [`nodejs`](https://nodejs.org/en) để cài đặt
+Bạn có thể gõ
+
+```bash
+npm -v
+```
+
+để kiểm tra version đã cài đặt để thực hiện các bước tiếp theo!
+Nếu bạn chưa cài đặt vui lòng lên trang chủ của [`Nodejs`](https://nodejs.org/en) để cài đặt
+
+## Tiến tải các thư viện phụ thuộc
+
+Sau khi bạn đã cài đặt `Nodejs` bạn tiến hành cài đặt các thư viện phụ thuộc bằng cách gõ câu lệnh:
+
+```bash
+npm install
+```
 
 ```bash
 npm run dev
