@@ -75,9 +75,9 @@ export default function StoreSwitcher({
       <PopoverContent className="w-[200px] p-0">
         <Command>
           <CommandList>
-            <CommandInput placeholder="Tìm kiếm DMSP" />
+            <CommandInput placeholder="Tìm kiếm kho chứa" />
             <CommandEmpty>Không tìm thấy</CommandEmpty>
-            <CommandGroup heading="DMSP">
+            <CommandGroup heading="Kho chứa">
               {formatItems.map((store) => (
                 <CommandItem
                   key={store.value}
@@ -108,7 +108,7 @@ export default function StoreSwitcher({
                 }}
               >
                 <PlusCircle className="mr-2 h-5 w-5" />
-                Thêm mới DMSP
+                Thêm mới kho chứa
               </CommandItem>
             </CommandGroup>
           </CommandList>
