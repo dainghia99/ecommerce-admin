@@ -5,7 +5,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const formatter = new Intl.NumberFormat("vn", {
+// Định dạng số tiền kiểu Việt Nam
+export const formatter = new Intl.NumberFormat("vi-VN", {
   style: "currency",
   currency: "VND",
 });
