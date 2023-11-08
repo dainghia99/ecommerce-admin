@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server"; // Import Next.js NextResponse từ thư viện "next/server".
-import { auth } from "@clerk/nextjs"; // Import hàm auth từ thư viện "@clerk/nextjs".
 
 import prismadb from "@/lib/prismadb"; // Import đối tượng prismadb từ thư mục "@/lib/prismadb".
 
 // Định nghĩa hàm GET cho định tuyến HTTP GET
 export async function GET(
-  req: Request, // Tham số req là đối tượng Request cho HTTP GET request
-  { params }: { params: { productId: string } } // Trích xuất đối tượng params chứa productId từ tham số truyền vào
+  req: Request,
+  { params }: { params: { productId: string } }
 ) {
   try {
     if (!params.productId) {
@@ -38,12 +37,6 @@ export async function DELETE(
   { params }: { params: { productId: string; storeId: string } } // Trích xuất đối tượng params chứa productId và storeId từ tham số truyền vào
 ) {
   try {
-    const { userId } = auth(); // Sử dụng hàm auth để lấy userId từ phiên đăng nhập
-
-    if (!userId) {
-      return new NextResponse("Unauthenticated", { status: 403 });
-    }
-
     if (!params.productId) {
       return new NextResponse("Product id is required", { status: 400 });
     }
@@ -52,7 +45,6 @@ export async function DELETE(
     const storeByUserId = await prismadb.store.findFirst({
       where: {
         id: params.storeId,
-        userId,
       },
     });
 
@@ -80,8 +72,6 @@ export async function PATCH(
   { params }: { params: { productId: string; storeId: string } } // Trích xuất đối tượng params chứa productId và storeId từ tham số truyền vào
 ) {
   try {
-    const { userId } = auth(); // Sử dụng hàm auth để lấy userId từ phiên đăng nhập
-
     const body = await req.json(); // Đọc dữ liệu từ body của HTTP request
 
     const {
@@ -94,10 +84,6 @@ export async function PATCH(
       isFeatured,
       isArchived,
     } = body; // Trích xuất các trường dữ liệu từ body
-
-    if (!userId) {
-      return new NextResponse("Unauthenticated", { status: 403 });
-    }
 
     if (!params.productId) {
       return new NextResponse("Product id is required", { status: 400 });
@@ -132,7 +118,6 @@ export async function PATCH(
     const storeByUserId = await prismadb.store.findFirst({
       where: {
         id: params.storeId,
-        userId,
       },
     });
 

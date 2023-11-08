@@ -1,5 +1,4 @@
 import prismadb from "@/lib/prismadb";
-import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 interface SetupLayoutProps {
@@ -7,21 +6,11 @@ interface SetupLayoutProps {
 }
 
 export default async function SetupLayout({ children }: SetupLayoutProps) {
-  const { userId } = auth();
+  const stores = await prismadb.store.findMany();
 
-  if (!userId) {
-    redirect("/sign-in");
+  if (stores.length > 0) {
+    redirect(`/${stores[0].id}`);
   }
 
-  const store = await prismadb.store.findFirst({
-    where: {
-      userId,
-    },
-  });
-
-  if (store) {
-    redirect(`/${store.id}`);
-  }
-
-  return <>{children}</>;
+  return <div>{children}</div>;
 }
