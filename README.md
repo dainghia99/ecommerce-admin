@@ -19,6 +19,10 @@ Sau khi bạn đã cài đặt `Nodejs` bạn tiến hành cài đặt các thư
 ```bash
 npm install
 ```
+- Lưu ý bạn muốn chạy file `docker-compose.yml` thì thực hiện câu lệnh sau:
+```bash
+docker-compose -p mysql up -d
+``` 
 
 ```bash
 npm run dev
